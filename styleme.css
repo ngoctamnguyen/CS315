@@ -5,10 +5,54 @@ h1, h3 {
     color: lightblue;
     font-style: Trebuchet MS;
 }
+h6 {
+    color: blue;
+}
 p, ul, ol {
     /* color: rgb(241, 241, 236);
     font-style: verdana; */
     color: rgb(241, 241, 236);
     font-family: verdana;
     font-size: 70%;
+}
+b {
+    color:rgb(109, 109, 49);
+    font-weight: bold;
+}
+p:first-child {
+    color:blueviolet;
+}
+p::first-line {
+    color: yellow;
+}
+h1 ~ p {
+    color: red;
+}
+
+a:link {
+    color: lightcoral;
+}
+
+a:visited {
+    color: rgb(43, 238, 43);
+}
+a:hover {
+    color: hotpink;
+}
+a:active {
+    color: blue;
+}
+ul {
+    list-style-type: circle;
+    list-style-position: outside;
+    padding: 20px;
+}
+ul,ol li {
+    background: gray;
+    padding: 5px;
+    margin-left: 35px;
+    margin-right: 600px;
+}
+ol {
+    padding: 15px;
 }

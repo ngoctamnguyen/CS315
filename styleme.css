@@ -1,0 +1,14 @@
+body {
+    background: #f54263;
+}
+h1, h3 {
+    color: lightblue;
+    font-style: Trebuchet MS;
+}
+p, ul, ol {
+    /* color: rgb(241, 241, 236);
+    font-style: verdana; */
+    color: rgb(241, 241, 236);
+    font-family: verdana;
+    font-size: 70%;
+}

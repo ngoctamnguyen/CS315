@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+        <style>
+            p { padding:2px; margin-left: 60px;}
+            input {margin:2px; margin-left: 60px;}
+            div {margin:2px; margin-left: 60px;}
+        </style>
+    </head>
+    <body>
+        <p>First Value</p>
+        <input name="firstValue" type="text" id="firstVal"/>
+        <p>Second Value</p>
+        <input name="secondValue" type="text" id="secondVal" value="" />
+        <p>Operations:</p>
+        <input name="add" type="button" onclick="calculate(name)" value="+" />
+        <input name="minus" type="button" onclick="calculate(name)" value="-" />
+        <input name="mult" type="button" onclick="calculate(name)" value="*" />
+        <p>Result:</p>
+        <div id="outputDiv"></div>
+        <script>
+            function calculate(operator) {
+                let num1 = parseInt(document.getElementById("firstVal").value);
+                let num2 = parseInt(document.getElementById("secondVal").value);
+                if (operator == "add") {
+                    document.getElementById('outputDiv').innerHTML = num1 + num2;
+                } else {
+                    if (operator == "minus") {
+                        document.getElementById('outputDiv').innerHTML = num1 - num2;
+                    }
+                    else {
+                        document.getElementById('outputDiv').innerHTML = num1 * num2;
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

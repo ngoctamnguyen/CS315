@@ -1,0 +1,69 @@
+.box {
+    border: 0px solid;
+    width: 30%;
+    padding: 1%;
+    background-color: gray;
+}
+.boxtable {
+    border: 0px solid;
+    width: 90%;
+    padding: 1%;
+    background-color: lightblue;
+}
+div input,p {
+    margin: auto;
+
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    border: 1px solid #6e3f9b;
+    text-align:center;
+    font-size:small;
+    padding: 8px;
+    background-color: lightblue;
+}
+td{
+    border: 1px solid #6e3f9b;
+    text-align: left;
+    font-size: small;
+    padding: 8px;
+}
+td:hover {
+    color: blue;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+tr:hover {
+    color: green;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .show {display: block;}

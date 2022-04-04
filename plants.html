@@ -35,7 +35,7 @@
             <button name="sourceToDes" onclick="sourceToDes()"> > </button>
             <button name="desToSource" onclick="desToSource()"> < </button>
         </label>
-        <<label>>
+        <label>
             <label>Destination</label>
             <select id="destination" name="Dest" multiple>
             </select>
@@ -52,9 +52,21 @@
             }
             function sourceToDes() {
                 let select = document.getElementsByName("sources")[0];
-                for (let item of select.options) {
+                for (let item of select) {
                     if (item.selected) {
                         let listDest = document.getElementsByName("Dest")[0];
+                        let pElement = document.createElement("option");
+                        pElement.innerHTML = "<option>" + item.value + "</option>";
+                        listDest.append(pElement);
+                        item.remove();
+                    }
+                }
+            }
+            function desToSource() {
+                let select = document.getElementsByName("Dest")[0];
+                for (let item of select.options) {
+                    if (item.selected) {
+                        let listDest = document.getElementsByName("sources")[0];
                         let pElement = document.createElement("option");
                         pElement.innerHTML = "<option>" + item.value + "</option>";
                         listDest.append(pElement);
@@ -63,13 +75,15 @@
                 }
                 for (let item of select) {
                     if (item.selected) {
-                       
+                       item.remove();
                     }
                 }
             }
-            function desToSource() {
-
+            function sort() {
+            
             }
         </script>
+
+
     </body>
 </html>

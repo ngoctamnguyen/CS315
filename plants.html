@@ -28,7 +28,7 @@
         <span>
             <p>Source  </p>
             <select name="sources" size="3" multiple>
-              <!-- <option selected>rrr</option> -->
+              <!-- <option id="optSrc">rrr</option> -->
             </select>
         </span>
         <label>
@@ -37,7 +37,7 @@
         </label>
         <label>
             <label>Destination</label>
-            <select id="destination" name="Dest" multiple>
+            <select name="Dest" id="destination"  multiple>
             </select>
         </label>
         <p><button name="sort" onclick="sort()">Sort</button></p>
@@ -46,7 +46,7 @@
                 let inputValue = document.getElementById("plant").value;
                 let listSource = document.getElementsByName("sources")[0];
                 let listElement = document.createElement("option");
-                listElement.innerHTML = "<option>" + inputValue + "</option>";
+                listElement.innerHTML = "<option id=optSrc>" + inputValue + "</option>";
                 listSource.append(listElement);
                 document.getElementById("plant").value = "";
             }
@@ -80,7 +80,19 @@
                 }
             }
             function sort() {
-            
+                let list = document.getElementsByName("sources")[0];
+                let arr = [];
+                for (let item of list) {
+                    arr.push(item.value);
+                    item.remove();
+                }
+                arr.sort();
+                for (let i = 0; i < arr.length; i++) {
+                    //let list = document.getElementsByName("sources")[0];
+                    let pElement = document.createElement("option");
+                    pElement.innerHTML = "<option>" + arr[i] + "</option>";
+                    list.append(pElement);
+                }
             }
         </script>
 

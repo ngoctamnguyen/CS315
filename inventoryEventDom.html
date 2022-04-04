@@ -21,7 +21,6 @@
     </div>
     <br>
         <button name="addBtn" onclick="addRow()">Add</button>
-        <button name="updateBtn" onclick="update()" disabled>Update</button>
         <select name="sortList">
             <option>Sort by Name</option>
             <option>Sort by Price</option>
@@ -56,59 +55,58 @@
                 }
                 return false;
             }
-            function addRow() {
-                /*Check Empty*/
-                if (checkEmpty()) {
-                    return;
-                };
 
-                /*Check Price is number*/
+            function checkInputNumber() {
                 if (Number.isInteger(parseInt(document.getElementById("price").value)) == false) {
                     alert("Price must be a number");
                     let elePrice = document.getElementById("price");
                     elePrice.style.backgroundColor = "red";
                     elePrice.focus();
+                    return true;
+                }
+            }
+            function addRow() {
+                //Check Empty
+                if (checkEmpty()) {
+                    return;
+                };
+                //Check Price is number
+                if (checkInputNumber()) {
                     return;
                 } else {
                     let elePrice = document.getElementById("price");
-                    elePrice.style.backgroundColor = "white";   
+                    elePrice.style.backgroundColor = "white";                      
                 }
+                //add or update row
+                if (rowUpdate < 0) {
+                    add();
+                } else {
+                    update();
+                }
+            }
+
+            function add() {
                 let table = document.getElementById("myTable");
-                let row = table.insertRow();
-                let cell1 = row.insertCell(0);
-                let cell2 = row.insertCell(1);
-                let cell3 = row.insertCell(2);
-                let cell4 = row.insertCell(3);
-                let cell5 = row.insertCell(4);
-                let cell6 = row.insertCell(5);
-                cell1.innerHTML = document.getElementById("name").value;
-                cell2.innerHTML = document.getElementById("price").value;
-                cell3.innerHTML = document.getElementById("quantity").value;
-                cell4.innerHTML = document.getElementById("rating").value; 
-                cell5.innerHTML = "<input id='edit' type='button' onclick='edit(this)' value='edit'/>";
-                cell6.innerHTML = "<input id='remove' type='button' onclick='remove(this)' value='remove'/>";
+                let cellName = document.getElementById("name").value;
+                let cellPrice = document.getElementById("price").value;
+                let cellQuantiry = document.getElementById("quantity").value;
+                let cellRating = document.getElementById("rating").value; 
+                let cellEdit = "<button name='editRow' onclick='edit(this)'>Edit</button>";
+                let cellRemove = "<button name='removeRow' onclick='remove(this)'>Remove</button>";
+                let trElement = document.createElement("tr");
+                trElement.innerHTML = "<td>" + cellName + "</td>" +
+                                        "<td>" + cellPrice + "</td>" +
+                                        "<td>" + cellQuantiry + "</td>" +
+                                        "<td>" + cellRating + "</td>" +
+                                        "<td>" + cellEdit + "</td>" +
+                                        "<td>" + cellRemove + "</td>"
+                table.append(trElement);
+
                 /*Clear input box*/
                 document.getElementById("name").value = "";
                 document.getElementById("price").value = "";
                 document.getElementById("quantity").value = "";
                 document.getElementById("rating").value = "";
-            }
-            function remove(row) {
-                row.parentNode.parentNode.remove();
-                // let i = row.parentNode.parentNode.rowIndex;
-                // document.getElementById("myTable").deleteRow(i);
-            }
-            function edit(rowNum) {
-                let table = document.getElementById("myTable");
-                let rows = table.rows;
-                let i = rowNum.parentNode.parentNode.rowIndex;
-                rowUpdate = i;
-                document.getElementById("name").value = rows[i].getElementsByTagName("td")[0].innerHTML;
-                document.getElementById("price").value = rows[i].getElementsByTagName("td")[1].innerHTML;
-                document.getElementById("quantity").value = rows[i].getElementsByTagName("td")[2].innerHTML;
-                document.getElementById("rating").value = rows[i].getElementsByTagName("td")[3].innerHTML;
-                document.getElementsByName("updateBtn")[0].disabled = false;
-                document.getElementsByName("addBtn")[0].disabled = true;
             }
             function update() {
                 let table = document.getElementById("myTable");
@@ -123,10 +121,25 @@
                     document.getElementById("price").value = "";
                     document.getElementById("quantity").value = "";
                     document.getElementById("rating").value = "";
-                    document.getElementsByName("updateBtn")[0].disabled = true;
-                    document.getElementsByName("addBtn")[0].disabled = false;
+                    // document.getElementsByName("updateBtn")[0].disabled = true;
+                    // document.getElementsByName("addBtn")[0].disabled = false;
+                    document.getElementsByName("addBtn")[0].innerHTML = "Add";
                 }
             }
+            function edit(rowNum) {
+                let table = document.getElementById("myTable");
+                let rows = table.rows;
+                let i = rowNum.parentNode.parentNode.rowIndex;
+                rowUpdate = i;
+                document.getElementById("name").value = rows[i].getElementsByTagName("td")[0].innerHTML;
+                document.getElementById("price").value = rows[i].getElementsByTagName("td")[1].innerHTML;
+                document.getElementById("quantity").value = rows[i].getElementsByTagName("td")[2].innerHTML;
+                document.getElementById("rating").value = rows[i].getElementsByTagName("td")[3].innerHTML;
+                // document.getElementsByName("updateBtn")[0].disabled = false;
+                // document.getElementsByName("addBtn")[0].disabled = true;
+                document.getElementsByName("addBtn")[0].innerHTML = "Update";
+            }
+
             function sortTable(column) {
                 let col = column;
                 let table, rows, switching, x, y;
@@ -162,7 +175,11 @@
                     }
                 }
             }
-
+            function remove(btn) {
+                btn.parentNode.parentNode.remove();
+                // let i = row.parentNode.parentNode.rowIndex;
+                // document.getElementById("myTable").deleteRow(i);
+            }
             window.onload = function (){
                 let selectElement = document.getElementsByName("sortList")[0];
                 selectElement.onchange = sortSelection;

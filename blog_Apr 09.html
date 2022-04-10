@@ -19,7 +19,9 @@
             }
             .bannerRight {
                 float:right;
+                margin-right: 30px;
                 display: inline;
+                /* word-spacing: 20px; */
             }
             .body {
                 background-color: blue;
@@ -87,6 +89,15 @@
                 background-color: blueviolet;
                 padding-bottom: 2px;;
             }
+            #more3 {
+                display: none;
+            }
+            #more2 {
+                display: none;
+            }
+            #more1 {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -116,10 +127,10 @@
                     <img src="./images/beach.jpg" alt="Picture">
                     <p>Hello Everyone, an example post is a post which is used to display an example post.
                         An example post is created to display an example post. Why are you reading this post?
-                        Hello Everyone, an example post is a post which is used to display an example post.
-                        An example post is created to display an example post. Why are you reading this post?
+                        <span id="dots3">...</span><span id="more3">Hello Everyone, an example post is a post which is used to display an example post.
+                        An example post is created to display an example post. Why are you reading this post?</span>
                     </p>
-                    <button class="readMore">Read More -></button>
+                    <button class="readMore" id="myBtn3" onclick="myFunction3()">Read more</button>
                 </div>
                 <div class="post">
                     <p class="head2">An Example Posts #2</p>
@@ -127,10 +138,10 @@
                     <!-- <img src="./images/beach.jpg" alt="Picture"> -->
                     <p>Hello Everyone, an example post is a post which is used to display an example post.
                         An example post is created to display an example post. Why are you reading this post?
-                        Hello Everyone, an example post is a post which is used to display an example post.
-                        An example post is created to display an example post. Why are you reading this post?
+                        <span id="dots2">...</span><span id="more2"> Hello Everyone, an example post is a post which is used 
+                        to display an example post. An example post is created to display an example post. Why are you reading this post?</span> 
                     </p>      
-                    <button class="readMore">Read More -></button>
+                    <button class="readMore" id="myBtn2" onclick="myFunction2()">Read more</button>
                 </div>
                 <div class="post">
                     <p class="head2">An Example Posts #1</p>
@@ -138,10 +149,13 @@
                     <img src="./images/Happy.jpg" alt="Picture">
                     <p>Hello Everyone, an example post is a post which is used to display an example post.
                         An example post is created to display an example post. Why are you reading this post?
+                        <span id="dots1">...</span><span id="more1">
                         Hello Everyone, an example post is a post which is used to display an example post.
                         An example post is created to display an example post. Why are you reading this post?
+                        Hello Everyone, an example post is a post which is used to display an example post.
+                        An example post is created to display an example post. Why are you reading this post? </span>
                     </p>
-                    <button class="readMore">Read More -></button>
+                    <button class="readMore" id="myBtn1" onclick="myFunction1()">Read more</button>
                 </div>
             </div>
             <div class="bodyRight">
@@ -190,5 +204,57 @@
                 </div>
             </div>
         </div>
+
+        <script>
+
+            function myFunction3() {
+                const dots = document.getElementById("dots3");
+                const moreText = document.getElementById("more3");
+                const btnText = document.getElementById("myBtn3");
+
+                if (dots.style.display === "none") {
+                    dots.style.display = "inline";
+                    btnText.innerHTML = "Read more"; 
+                    moreText.style.display = "none";
+                } else {
+                    dots.style.display = "none";
+                    btnText.innerHTML = "Read less"; 
+                    moreText.style.display = "inline";
+                }
+            }
+
+            function myFunction2() {
+                const dots = document.getElementById("dots2");
+                const moreText = document.getElementById("more2");
+                const btnText = document.getElementById("myBtn2");
+
+                if (dots.style.display === "none") {
+                    dots.style.display = "inline";
+                    btnText.innerHTML = "Read more"; 
+                    moreText.style.display = "none";
+                } else {
+                    dots.style.display = "none";
+                    btnText.innerHTML = "Read less"; 
+                    moreText.style.display = "inline";
+                }
+            }
+
+            function myFunction1() {
+                const dots = document.getElementById("dots1");
+                const moreText = document.getElementById("more1");
+                const btnText = document.getElementById("myBtn1");
+
+                if (dots.style.display === "none") {
+                    dots.style.display = "inline";
+                    btnText.innerHTML = "Read more"; 
+                    moreText.style.display = "none";
+                } else {
+                    dots.style.display = "none";
+                    btnText.innerHTML = "Read less"; 
+                    moreText.style.display = "inline";
+                }
+            }
+
+        </script>
     </body>
 </html>

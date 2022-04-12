@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Lorem</title>
+        <style>
+            body {
+                background-color: #444;
+                font-family:Georgia, 'Times New Roman', Times, serif;
+                color: aqua;
+            }
+            .wrapper {
+                display: grid;
+                grid-gap: 10px;
+                grid-template-columns: 35%  35%  30%;
+                grid-template-areas:
+                    "box1 box2 box3"
+                    "line line line"
+                    "footer footer footer";
+                background-color: transparent;
+                color: white;
+            }
+            .line {
+                grid-area: line;
+                width: 100%;
+                height:0em;
+            }
+            .box1 {
+                    grid-area: box1;
+                }
+
+            .box2 {
+                grid-area: box2;
+            }
+
+            .box3 {
+                grid-area: box3;
+            }
+            .photo {
+                display:grid;
+                /* grid-gap:10px; */
+                row-gap: 20px;
+                column-gap:1px;
+                justify-items:baseline;
+                grid-template-columns: 50% 50%;
+                grid-template-rows: 50% 50%;              
+                grid-template-areas:
+                    "imgs1 imgs2"
+                    "imgs3 imgs4";
+            }
+
+            .footer {
+                grid-area: footer;
+                display: grid;
+                grid-gap: 100px;
+                
+                grid-template-columns: 70%  30%;
+                grid-template-areas:
+                    "footer-menu footer-logo";
+
+            }
+            .footer-menu {
+                width: 75%;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                padding-right: 50px;
+                
+            }
+            .footer-logo {
+                font-style: normal;
+            }
+
+            .boxheader {
+                font-family: Tahoma;
+            }
+            ul {
+                list-style:url(./images/tw1.gif);
+                list-style-type: armenian;
+                font-style: italic;
+            }
+            .imgs {
+                width: 100px;
+                height:100px
+            }
+            .email {
+                display: grid;
+            }
+            .inputbox {
+                background-color:gray;
+                color: white;
+                height: 30px;
+                grid-column: col 1/ span 5;
+                grid-row: 1;
+                z-index: 0;
+            }
+            .sendBtn {
+                height: 39px;
+                grid-column: col 2/ span 5;
+                grid-row: 1;
+                justify-self: right;
+                background-color:rgb(162, 213, 162);
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="box1">
+                <h3 class="boxheader">About Us</h3>
+                <p style="line-height: 130%;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, Laboriosam itaque unde facere repellendus, odio et iste voluptatum aspernatur ratione mollitia tempora eligendi maxime est, blanditiis accusamus. Incidunt, aut,quis!</p>
+                <p><img src="./images/call.jpg" style="padding-right:10px;" width="20px">+1 291 3912 329</p>
+                <p><img src="./images/email.png" style="padding-right:10px;" width="20px">info@gmail.com</p>
+                <div class="email">
+                    <input class="inputbox" placeholder="Enter your email" style="border-radius: 20px"/>
+                    <button class="sendBtn" style="border-radius: 20px; width: 80px;" >Send</button>
+                </div>
+            </div>
+            <div class="box2">
+                <h3 class="boxheader">Latest Tweet</h3>
+                <ul>
+                    <li>
+                        <div class="liTw">
+                            <!-- <label><img class="liImg" src="./images/tweeter.jpg" width="10px" height="10px"></label> -->
+                            <p></p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere unde omnis veniam porro excepturi.</p>
+                        </div>
+                    </li>
+                    <li>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere unde omnis veniam porro excepturi.
+                    </li>
+                    <li>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere unde omnis veniam porro excepturi.
+                    </li>
+                </ul>
+            </div>
+            <div class="box3">
+                <div class="box3">
+                    <h3 class="boxheader">Instagram</h3>
+                    <div class="photo">
+                        <img class="imgs1" src="./images/2.jpg" width="150px" height="150px" >
+                        <img class="imgs2" src="./images/3.jpg" width="150px" height="150px" >
+                        <img class="imgs2" src="./images/4.jpg" width="150px" height="150px" >
+                        <img class="imgs4" src="./images/5.jpg" width="150px" height="150px" >
+                    </div>
+                </div>
+            </div>
+            <hr class="line">
+            <div class="footer">
+                <div class="footer-menu">
+                    <a >Home</a>
+                    <a >About</a>
+                    <a>Our Works</a>
+                    <a>Services</a>
+                    <a>Blog</a>
+                    <a>Contacts</a>
+                </div>
+                <div class="footer-logo">
+                    <h2>Colorlib</h2>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

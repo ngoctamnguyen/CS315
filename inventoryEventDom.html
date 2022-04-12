@@ -22,12 +22,14 @@
     <br>
         <button name="addBtn" onclick="addRow()">Add</button>
         <select name="sortList">
+            <option value="" disabled selected>Sort By...</option>
             <option>Sort by Name</option>
             <option>Sort by Price</option>
         </select>  
         <select name="filterList">
-            <option>Quantity</option>
-            <option>Rating</option>
+            <option value="" disabled selected>Filter By...</option>
+            <option>Filter by Quantity</option>
+            <option>Filter by Rating</option>
         </select>
         <br><br>
         <!-- table -->
@@ -44,6 +46,13 @@
         </table>
     </div>
         <script>
+            window.onload = function (){
+                let selectElement = document.getElementsByName("sortList")[0];
+                selectElement.onchange = sortSelection;
+                document.getElementById("addBtn").onclick = add;
+                document.getElementById("sortList").onchange = sortElements;
+                document.getElementById("filterList").onchange = filterElem ;
+            }
             let rowUpdate = -1;
             function checkEmpty() {
                 let boxes = document.getElementsByTagName("input");
@@ -175,16 +184,28 @@
                     }
                 }
             }
+            function filterElem() {
+                let filteredList;
+                let filtedArr;
+                for (let option of this.options) {
+                    if (option.selected) {
+                        filteredList = option.value
+                    }
+                }
+                if (filteredList === "filterquantity") {
+                    filtedArr = storageArray.filter(item => item.quantity > 100);
+                    tableUpdate(filtedArr);
+                } else if (filteredList === "filterrating") {
+                    filtedArr = storageArray.filter(item => item.rating > 4);
+                    tableUpdate(filtedArr);
+                }
+            }
             function remove(btn) {
                 btn.parentNode.parentNode.remove();
                 // let i = row.parentNode.parentNode.rowIndex;
                 // document.getElementById("myTable").deleteRow(i);
             }
-            window.onload = function (){
-                let selectElement = document.getElementsByName("sortList")[0];
-                selectElement.onchange = sortSelection;
-            }
-    
+
             function sortSelection(){
                 for(let option of this.options){    
                     if(option.selected){

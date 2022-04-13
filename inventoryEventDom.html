@@ -47,11 +47,13 @@
     </div>
         <script>
             window.onload = function (){
-                let selectElement = document.getElementsByName("sortList")[0];
-                selectElement.onchange = sortSelection;
-                document.getElementById("addBtn").onclick = add;
-                document.getElementById("sortList").onchange = sortElements;
-                document.getElementById("filterList").onchange = filterElem ;
+                let sortElement = document.getElementsByName("sortList")[0];
+                sortElement.onchange = sortSelection;
+                let filterElement = document.getElementsByName("filterList")[0];
+                filterElement.onchange = filterElem;
+                document.getElementsByName("addBtn").onclick = add;
+                // document.getElementsByName("sortList").onchange = sortTable;
+                // document.getElementsByName("filterList").onchange = filterElem ;
             }
             let rowUpdate = -1;
             function checkEmpty() {
@@ -200,10 +202,30 @@
                     tableUpdate(filtedArr);
                 }
             }
+
+            function tableUpdate(arr) {
+                let table = document.getElementById("myTable");
+                let tableChildren = table.children[0];
+                tableChildren.remove();
+                table.innerHTML = "<tbody> <tr><th>Product Name</th><th>Category</th><th>Quantity</th><th>Rating</th><th class='button'>Edit</th><th class='button'>Remove</th></tr></tbody>";
+                for (let element of arr) {
+                    let itemName = element.name;
+                    let category = element.category;
+                    let quantity = element.quantity;
+                    let rating = element.rating;
+                    let id = element.id;
+                    let newRow = table.insertRow(-1);
+                    newRow.id = id;
+                    newRow.insertCell(0).innerHTML = itemName;
+                    let cell2 = newRow.insertCell(1).innerHTML = category;
+                    let cell3 = newRow.insertCell(2).innerHTML = quantity;
+                    let cell4 = newRow.insertCell(3).innerHTML = rating;
+                    let cell5 = newRow.insertCell(4).innerHTML = "<button id='editButton' onclick='edit(this)'>Edit</button>";
+                    let cell6 = newRow.insertCell(5).innerHTML = "<button id='removeButton' onclick='remove(this)'>Remove</button>";
+                }
+            }
             function remove(btn) {
                 btn.parentNode.parentNode.remove();
-                // let i = row.parentNode.parentNode.rowIndex;
-                // document.getElementById("myTable").deleteRow(i);
             }
 
             function sortSelection(){

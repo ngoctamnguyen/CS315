@@ -208,7 +208,9 @@
             return null;
         }
 
-        printKeyValueNode(abe, "Homer");
+        console.log(JSON.stringify(printSubtree(abe, "Homer")));
+        //{"value":"Homer","descendents":[{"value":"Bart","descendents":[]},{"value":"Lisa","descendents":[]},{"value":"Maggie","descendents":[]}]}
+
 
         // 4. Create a new constructor function ListNode (based on TreeNode below) and use it to generate a
         // linked list of Abe, Homer, Bart, Lisa, Maggie instead of a tree.

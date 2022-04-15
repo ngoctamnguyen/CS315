@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html{
+            margin: 20px;
+            padding: 10px;
+            background-color: black;
+        }
+        body{
+            margin: 20px;
+            background-color: white;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <p>Recursion Assignment</p>
+    <pre>
+        "use strist";
+
+        //Part I
+        //Sum all numbers till the given one
+        function sumTo(n) {
+            if (n == 1) return 1;
+            return n + sumTo(n - 1);
+        }
+
+        console.log(sumTo(5));
+
+        //Calculate factorial
+        function factorial(n) {
+            if (n==1) {
+                return 1;
+            }
+            return n * factorial(n - 1);
+        }
+        console.log(factorial(3));
+
+        //Fibonacci numbers (the dynamic programming solution is optional)
+        function fib(n) {
+            if (n <= 1 ) {
+                return n;
+            }
+            return fib(n - 1) + fib(n - 2);
+        }
+        //fibo: 1,1,2,3,5,8,13,21.....
+        console.log(fib(6)); //8
+
+
+
+        let list = {
+            value: 1,
+            next: {
+            value: 2,
+            next: {
+                value: 3,
+                next: {
+                value: 4,
+                next: null
+                }
+            }
+            }
+        };
+        
+        //Output a single-linked list
+        function printList(list) {
+            console.log(list.value);
+            if (list.next != null) {
+                printList(list.next);
+            }
+        }
+        printList(list);
+        //   Output a single-linked list in reverse order
+        function printReverseList(list) {
+            if (list.next) {
+            printReverseList(list.next);
+            }
+            console.log(list.value);
+        }
+        
+        printReverseList(list);
+
+        
+        let node3 = {
+            name: "p",
+            value: "This is text in the a paragraph",
+            children: null
+        };
+        // Part II.1: print “name: value” to the console for every node in the following tree data structure
+        function printKeyValueNode(node) {
+            if (node.children == null) {
+                console.log(`${node.name} : ${node.value} `);
+            }
+            else {
+                for (let subNode of node.children) {
+                    printKeyValueNode(subNode);
+                }
+                console.log(`${node.name} : ${node.value} `);
+            }
+        }
+
+        printKeyValueNode(node3);
+
+        //write an iterative function
+        function printNodeNameValue(node) {
+            console.log(`${node.name} : ${node.value} `);
+            if (node.children !== null) {
+                for (const child of node.children) {
+                    console.log(`${child.name} : ${child.value} `);
+                    if (child.children !== null) {
+                        for (const baby of child.children) {
+                            console.log(`${baby.name} : ${baby.value} `);
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+        printNodeNameValue(node3)
+
+
+        function collectValues(node) {
+            collectionName.push(`${node.name} : ${node.value}`);
+            if (node.children !== null) {
+                for (const kid of node.children) {
+                    collectionName.push(`${kid.name} : ${kid.value}`);
+                    if (kid.children !== null) {
+                        for (const baby of kid.children) {
+                            collectionName.push(`${baby.name} : ${baby.value}`);
+                        }
+                    }
+                }
+            }
+            return collectionName;
+        }
+
+
+        //Part III
+
+        function TreeNode(value) {
+            this.value = value;
+            this.descendents = [];
+            }
+        // create nodes with values
+        const abe = new TreeNode('Abe');
+        const homer = new TreeNode('Homer');
+        const bart = new TreeNode('Bart');
+        const lisa = new TreeNode('Lisa');
+        const maggie = new TreeNode('Maggie');
+        // associate root with is descendents
+        abe.descendents.push(homer);
+        homer.descendents.push(bart, lisa, maggie);
+        
+
+        //1. Log to the console the names of everyone in the tree.
+        function displayNames(simpsons) {
+            if (simpsons.descendents === []) {
+                return;
+            } else {
+                for (const simpson of simpsons.descendents) {
+                    displayNames(simpson);
+                }
+                console.log(`${simpsons.value}`);
+            }
+        }
+
+        displayNames(abe);
+
+        //2. Given a target value, return true or false if there is a node in the tree with the target value. E.g.,
+
+        function findTargetValue(tree, str) {
+            if (tree.value === str) {
+                return true;
+            }
+            if (tree.descendents !== []) {
+                for (const subTree of tree.descendents) {
+                    if (findTargetValue(subTree, str)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        console.log(findTargetValue(abe, "Homer"));  // true
+        console.log(findTargetValue(abe, "Homer1"));  // false
+
+        // 3. Given a target value, return the subtree with the found node or null if no match. Extend the
+        // tree to have a more interesting test. Create a mocha test to run at least 2 or 3 tests on your
+        // tree
+        function printSubtree(tree, str) {
+            if (tree.value === str) {
+                return tree;
+            } else if (tree.descendents.length !== 0) {
+                for (const subTree of tree.descendents) {
+                    if (printTarget(subTree, str)) {
+                        return printSubtree(subTree, str);
+                    }
+                }
+            }
+            return null;
+        }
+
+        printKeyValueNode(abe, "Homer");
+
+        // 4. Create a new constructor function ListNode (based on TreeNode below) and use it to generate a
+        // linked list of Abe, Homer, Bart, Lisa, Maggie instead of a tree.
+
+        function LinkedList(value, next) {
+            this.value = value;
+            this.next = next;
+        }
+        const maggie1 = new LinkedList("Maggie", null);
+        const lisa1 = new LinkedList("Lisa", maggie1);
+        const bart1 = new LinkedList("Bart", lisa1);
+        const homer1 = new LinkedList("Homer", bart1);
+        const abe1 = new LinkedList("Abe", homer1);
+
+        //console.log(JSON.stringify(abe1));
+
+        // 5. Given a target value in the list, return the node that contains the target value or null if no match.
+
+        const str = "Homer";
+        function findListNode(list, str) {
+            if (list.value === str) {
+                return list;
+
+            } else if (list.next !== null) {
+                return (findListNode(list.next, str));
+            }
+        }
+
+        //console.log(findListNode(abe, str));
+
+
+        // 6.1 allCaps(node) will change the value of a node to be all caps. 
+        function allCap(list) {
+            if (list.descendents === []) {
+                return;
+            } else {
+                for (const subList of list.descendents) {
+                    allCap(subList);
+                }
+                list.value = list.value.toUpperCase();
+            }
+        }
+        //allCap(abe);
+        //displayNames(abe);
+
+        //6.2 addStars(node) will change the value to have *** in front and behind the node value
+        function addStar(list) {
+            if (list.descendents === []) {
+                return;
+            } else {
+                for (const subList of list.descendents) {
+                    addStar(subList);
+                }
+                list.value = "***" + list.value + "***";
+            }
+        }
+        //addStar(abe);
+        //displayNames(abe);
+        // 6.3 reverseNode(node) will reverse the string of the node value. Abe -> ebA
+        function reverseNode(list) {
+            if (list.descendents === []) {
+                return;
+            } else {
+                for (const subList of list.descendents) {
+                    reverseNode(subList);
+                }
+                let reversed = "";
+                for (let i = list.value.length - 1; i >= 0; i--) {
+                    reversed += list.value.charAt(i);
+                }
+                list.value = reversed;
+            }
+        }
+
+        // 7. Write a recursive function, treeCollector(tree) that will walk the tree and collect the values of
+        // each node into an array [“Abe”, “Homer”, “Bart”, “Lisa”, “Maggie”] for this tree
+        let collector = [];
+        function treeCollector(tree) {
+            collector.push(tree.value);
+            if (tree.next != null) {
+                treeCollector(tree.next);
+            }
+            return collector;
+        }
+        console.log(treeCollector(abe1));
+
+    </pre>     
+</body>
+</html>

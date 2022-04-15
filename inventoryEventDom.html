@@ -28,8 +28,8 @@
         </select>  
         <select name="filterList">
             <option value="" disabled selected>Filter By...</option>
-            <option>Filter by Quantity</option>
-            <option>Filter by Rating</option>
+            <option>Quantity greater than 100</option>
+            <option>Rating greater than 4</option>
         </select>
         <br><br>
         <!-- table -->
@@ -49,8 +49,8 @@
             window.onload = function (){
                 let sortElement = document.getElementsByName("sortList")[0];
                 sortElement.onchange = sortSelection;
-                let filterElement = document.getElementsByName("filterList")[0];
-                filterElement.onchange = filterElem;
+                let filterlist = document.getElementsByName("filterList")[0];
+                filterlist.onchange = filterSelection;
                 document.getElementsByName("addBtn").onclick = add;
                 // document.getElementsByName("sortList").onchange = sortTable;
                 // document.getElementsByName("filterList").onchange = filterElem ;
@@ -150,7 +150,19 @@
                 // document.getElementsByName("addBtn")[0].disabled = true;
                 document.getElementsByName("addBtn")[0].innerHTML = "Update";
             }
-
+            function sortSelection(){
+                for(let option of this.options){    
+                    if(option.selected){
+                        if (option.innerHTML == "Sort by Name") {
+                            sortTable(0);
+                        } else {
+                            if (option.innerHTML == "Sort by Price") {
+                                sortTable(1);
+                            }
+                        }
+                    }  
+                }
+            }
             function sortTable(column) {
                 let col = column;
                 let table, rows, switching, x, y;
@@ -170,77 +182,52 @@
                     }
                 }
             }
-
-            function filterFunction() {
-                let input, filter, ul, li, a, i;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                div = document.getElementById("myDropdown");
-                a = div.getElementsByTagName("a");
-                for (i = 0; i < a.length; i++) {
-                    txtValue = a[i].textContent || a[i].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    a[i].style.display = "";
-                    } else {
-                    a[i].style.display = "none";
-                    }
-                }
-            }
-            function filterElem() {
-                let filteredList;
-                let filtedArr;
-                for (let option of this.options) {
-                    if (option.selected) {
-                        filteredList = option.value
-                    }
-                }
-                if (filteredList === "filterquantity") {
-                    filtedArr = storageArray.filter(item => item.quantity > 100);
-                    tableUpdate(filtedArr);
-                } else if (filteredList === "filterrating") {
-                    filtedArr = storageArray.filter(item => item.rating > 4);
-                    tableUpdate(filtedArr);
-                }
-            }
-
-            function tableUpdate(arr) {
-                let table = document.getElementById("myTable");
-                let tableChildren = table.children[0];
-                tableChildren.remove();
-                table.innerHTML = "<tbody> <tr><th>Product Name</th><th>Category</th><th>Quantity</th><th>Rating</th><th class='button'>Edit</th><th class='button'>Remove</th></tr></tbody>";
-                for (let element of arr) {
-                    let itemName = element.name;
-                    let category = element.category;
-                    let quantity = element.quantity;
-                    let rating = element.rating;
-                    let id = element.id;
-                    let newRow = table.insertRow(-1);
-                    newRow.id = id;
-                    newRow.insertCell(0).innerHTML = itemName;
-                    let cell2 = newRow.insertCell(1).innerHTML = category;
-                    let cell3 = newRow.insertCell(2).innerHTML = quantity;
-                    let cell4 = newRow.insertCell(3).innerHTML = rating;
-                    let cell5 = newRow.insertCell(4).innerHTML = "<button id='editButton' onclick='edit(this)'>Edit</button>";
-                    let cell6 = newRow.insertCell(5).innerHTML = "<button id='removeButton' onclick='remove(this)'>Remove</button>";
-                }
-            }
-            function remove(btn) {
-                btn.parentNode.parentNode.remove();
-            }
-
-            function sortSelection(){
+            function filterSelection(){
                 for(let option of this.options){    
                     if(option.selected){
-                        if (option.innerHTML == "Sort by Name") {
-                            sortTable(0);
+                        if (option.innerHTML == "Quantity greater than 100") {
+                            filterFunction(2, 100);
                         } else {
-                            if (option.innerHTML == "Sort by Price") {
-                                sortTable(1);
+                            if (option.innerHTML == "Rating greater than 4") {
+                                 filterFunction(3, 4);
                             }
                         }
                     }  
                 }
-            }            
+            }
+            function filterFunction(column, number) {
+                let col = column;
+                let table, rows, x;
+                table = document.getElementById("myTable");
+                rows = table.rows;
+                console.log(rows);
+                for (let i = 1; i < (rows.length - 1); i++) {
+                        x = rows[i].getElementsByTagName("td")[col];
+                        console.log(x.innerHTML);
+                        if (x.innerHTML < number) {
+                            rows[i].style.display = "none";
+                        }
+                    }          
+                }              
+                // let input, filter, ul, li, a, i;
+                // input = document.getElementById("myInput");
+                // filter = input.value.toUpperCase();
+                // div = document.getElementById("myDropdown");
+                // a = div.getElementsByTagName("a");
+                // for (i = 0; i < a.length; i++) {
+                //     txtValue = a[i].textContent || a[i].innerText;
+                //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                //     a[i].style.display = "";
+                //     } else {
+                //     a[i].style.display = "none";
+                //     }
+                // }
+
+            function remove(btn) {
+                btn.parentNode.parentNode.remove();
+            }
+
+            
         </script>
         <br>
         <!-- Validation -->

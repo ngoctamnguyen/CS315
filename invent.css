@@ -32,6 +32,7 @@ td{
     text-align: left;
     font-size: small;
     padding: 8px;
+    width: 30px;
 }
 td:hover {
     color: blue;
@@ -43,8 +44,6 @@ tr:nth-child(even) {
 tr:hover {
     color: green;
 }
-
-
 .dropdown {
     position: relative;
     display: inline-block;
@@ -65,5 +64,9 @@ tr:hover {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+  }
+
+  .btnGroup {
+      padding-left: 40px;
   }
   .show {display: block;}

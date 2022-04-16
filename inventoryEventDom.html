@@ -20,6 +20,7 @@
         </div>
     </div>
     <br>
+    <div class="btnGroup">
         <button name="addBtn" onclick="addRow()">Add</button>
         <select name="sortList">
             <option value="" disabled selected>Sort By...</option>
@@ -31,7 +32,8 @@
             <option>Quantity greater than 100</option>
             <option>Rating greater than 4</option>
         </select>
-        <br><br>
+    </div>
+    <br>
         <!-- table -->
     <div class="boxtable">      
         <table id="myTable">
@@ -43,17 +45,18 @@
                 <th>Edit</th>
                 <th>remove</th>
             </tr>
+            <tbody id="tableBody"></tbody>
         </table>
     </div>
         <script>
+            let tableArray = [];
+            let index = 1;  
             window.onload = function (){
                 let sortElement = document.getElementsByName("sortList")[0];
                 sortElement.onchange = sortSelection;
                 let filterlist = document.getElementsByName("filterList")[0];
                 filterlist.onchange = filterSelection;
                 document.getElementsByName("addBtn").onclick = add;
-                // document.getElementsByName("sortList").onchange = sortTable;
-                // document.getElementsByName("filterList").onchange = filterElem ;
             }
             let rowUpdate = -1;
             function checkEmpty() {
@@ -97,7 +100,7 @@
             }
 
             function add() {
-                let table = document.getElementById("myTable");
+                let table = document.getElementById("tableBody");
                 let cellName = document.getElementById("name").value;
                 let cellPrice = document.getElementById("price").value;
                 let cellQuantiry = document.getElementById("quantity").value;
@@ -105,6 +108,7 @@
                 let cellEdit = "<button name='editRow' onclick='edit(this)'>Edit</button>";
                 let cellRemove = "<button name='removeRow' onclick='remove(this)'>Remove</button>";
                 let trElement = document.createElement("tr");
+                trElement.id = index;
                 trElement.innerHTML = "<td>" + cellName + "</td>" +
                                         "<td>" + cellPrice + "</td>" +
                                         "<td>" + cellQuantiry + "</td>" +
@@ -112,12 +116,33 @@
                                         "<td>" + cellEdit + "</td>" +
                                         "<td>" + cellRemove + "</td>"
                 table.append(trElement);
-
+                //add to storage array
+                tableArray.push({id: index, name: cellName, price: cellPrice, quantity: cellQuantiry, rating: cellRating});
+                index++;
                 /*Clear input box*/
                 document.getElementById("name").value = "";
                 document.getElementById("price").value = "";
                 document.getElementById("quantity").value = "";
                 document.getElementById("rating").value = "";
+            }
+
+            function tableUpdate(array) {
+                let tableElement = document.getElementById("tableBody")[0];
+                let cellEdit = "<button name='editRow' onclick='edit(this)'>Edit</button>";
+                let cellRemove = "<button name='removeRow' onclick='remove(this)'>Remove</button>";
+                tableElement.innerHTML="";
+                array.forEach(function (item) {
+                    let trElement = document.createElement("tr");
+                    
+                    trElement.innerHTML = "<td>" + item.name + "</td>" + 
+                                        "<td>" + item.price + "</td>" + 
+                                        "<td>" + item.quantity + "</td>" +
+                                        "<td>" + item.rating + "</td>" +
+                                        "<td>" + cellEdit + "</td>" +
+                                        "<td>" + cellRemove + "</td>";
+
+                    tableElement.append(trElement);
+                })
             }
             function update() {
                 let table = document.getElementById("myTable");
@@ -127,27 +152,33 @@
                     rows[rowUpdate].getElementsByTagName("td")[1].innerHTML = document.getElementById("price").value;
                     rows[rowUpdate].getElementsByTagName("td")[2].innerHTML = document.getElementById("quantity").value;
                     rows[rowUpdate].getElementsByTagName("td")[3].innerHTML = document.getElementById("rating").value;
+                    //update tableArray
+                    for (let element of tableArray) {
+                        if (element.id == rowUpdate) {
+                            element.name = document.getElementById("name").value;
+                            element.price = document.getElementById("price").value;
+                            element.quantity = document.getElementById("quantity").value;
+                            element.rating = document.getElementById("rating").value;
+                        }
+                    }
                     rowUpdate = -1;
+                    //clear input boxes
                     document.getElementById("name").value = "";
                     document.getElementById("price").value = "";
                     document.getElementById("quantity").value = "";
                     document.getElementById("rating").value = "";
-                    // document.getElementsByName("updateBtn")[0].disabled = true;
-                    // document.getElementsByName("addBtn")[0].disabled = false;
                     document.getElementsByName("addBtn")[0].innerHTML = "Add";
                 }
             }
-            function edit(rowNum) {
+            function edit(rowObj) {
                 let table = document.getElementById("myTable");
                 let rows = table.rows;
-                let i = rowNum.parentNode.parentNode.rowIndex;
+                let i = rowObj.parentNode.parentNode.rowIndex;
                 rowUpdate = i;
                 document.getElementById("name").value = rows[i].getElementsByTagName("td")[0].innerHTML;
                 document.getElementById("price").value = rows[i].getElementsByTagName("td")[1].innerHTML;
                 document.getElementById("quantity").value = rows[i].getElementsByTagName("td")[2].innerHTML;
                 document.getElementById("rating").value = rows[i].getElementsByTagName("td")[3].innerHTML;
-                // document.getElementsByName("updateBtn")[0].disabled = false;
-                // document.getElementsByName("addBtn")[0].disabled = true;
                 document.getElementsByName("addBtn")[0].innerHTML = "Update";
             }
             function sortSelection(){
@@ -186,48 +217,46 @@
                 for(let option of this.options){    
                     if(option.selected){
                         if (option.innerHTML == "Quantity greater than 100") {
-                            filterFunction(2, 100);
+                            filtedArr = tableArray.filter(item => item.quantity > 100);
+                            tableUpdate(filtedArr);
                         } else {
                             if (option.innerHTML == "Rating greater than 4") {
-                                 filterFunction(3, 4);
+                                filtedArr = tableArray.filter(item => item.rating > 4);
+                                tableUpdate(filtedArr);
                             }
                         }
                     }  
                 }
             }
-            function filterFunction(column, number) {
-                let col = column;
-                let table, rows, x;
-                table = document.getElementById("myTable");
-                rows = table.rows;
-                console.log(rows);
-                for (let i = 1; i < (rows.length - 1); i++) {
-                        x = rows[i].getElementsByTagName("td")[col];
-                        console.log(x.innerHTML);
-                        if (x.innerHTML < number) {
-                            rows[i].style.display = "none";
-                        }
-                    }          
-                }              
-                // let input, filter, ul, li, a, i;
-                // input = document.getElementById("myInput");
-                // filter = input.value.toUpperCase();
-                // div = document.getElementById("myDropdown");
-                // a = div.getElementsByTagName("a");
-                // for (i = 0; i < a.length; i++) {
-                //     txtValue = a[i].textContent || a[i].innerText;
-                //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                //     a[i].style.display = "";
-                //     } else {
-                //     a[i].style.display = "none";
-                //     }
-                // }
 
-            function remove(btn) {
-                btn.parentNode.parentNode.remove();
+            function tableUpdate(array) {
+                let tableElement = document.getElementById("tableBody");
+                tableElement.children[0].remove();
+                let cellEdit = "<button name='editRow' onclick='edit(this)'>Edit</button>";
+                let cellRemove = "<button name='removeRow' onclick='remove(this)'>Remove</button>";
+                tableElement.innerHTML="";
+                array.forEach(function (item) {
+                    let trElement = document.createElement("tr");
+                    
+                    trElement.innerHTML = "<td>" + item.name + "</td>" + 
+                                        "<td>" + item.price + "</td>" + 
+                                        "<td>" + item.quantity + "</td>" +
+                                        "<td>" + item.rating + "</td>" +
+                                        "<td>" + cellEdit + "</td>" +
+                                        "<td>" + cellRemove + "</td>";
+                    tableElement.append(trElement);
+                })
             }
 
-            
+            function remove(obj) {
+                const rowId = obj.parentNode.parentNode
+                for (let element of tableArray) {
+                    if (element.id == rowId.index) {
+                        storageArray.splice(storageArray.indexOf(element), 1);
+                    }
+                }
+                rowId.remove();
+            }
         </script>
         <br>
         <!-- Validation -->

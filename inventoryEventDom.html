@@ -32,6 +32,7 @@
             <option>Quantity greater than 100</option>
             <option>Rating greater than 4</option>
         </select>
+        <button name="clearFilter" onclick="clearFilter()">Add</button>
     </div>
     <br>
         <!-- table -->
@@ -124,6 +125,7 @@
                 document.getElementById("price").value = "";
                 document.getElementById("quantity").value = "";
                 document.getElementById("rating").value = "";
+                console.log(tableArray);
             }
 
             function tableUpdate(array) {
@@ -169,6 +171,7 @@
                     document.getElementById("rating").value = "";
                     document.getElementsByName("addBtn")[0].innerHTML = "Add";
                 }
+                console.log(tableArray);
             }
             function edit(rowObj) {
                 let table = document.getElementById("myTable");
@@ -256,6 +259,10 @@
                     }
                 }
                 rowId.remove();
+            }
+
+            function clearFilter() {
+                tableUpdate(tableArray);
             }
         </script>
         <br>
